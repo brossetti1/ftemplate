@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity 0.8.13;
 
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
@@ -29,12 +29,12 @@ contract PriceFeedConsumer {
      * @return latest price
      */
     function getLatestPrice() public view returns (int256) {
-        (
-            uint80 roundID,
-            int256 price,
-            uint256 startedAt,
-            uint256 timeStamp,
-            uint80 answeredInRound
+         (
+            /*uint80 roundID*/,
+            int price,
+            /*uint startedAt*/,
+            /*uint timeStamp*/,
+            /*uint80 answeredInRound*/
         ) = priceFeed.latestRoundData();
         return price;
     }

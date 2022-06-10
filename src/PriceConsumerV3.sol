@@ -29,7 +29,7 @@ contract PriceFeedConsumer {
      * @return latest price
      */
     function getLatestPrice() public view returns (int256) {
-         (
+        (
             /*uint80 roundID*/,
             int price,
             /*uint startedAt*/,

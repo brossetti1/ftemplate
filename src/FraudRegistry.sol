@@ -3,6 +3,8 @@ pragma solidity 0.8.13;
 
 import "./PriceConsumerV3.sol";
 
+// import "@openzeppelin/contracts/access/Ownable.sol";
+
 abstract contract ENS {
     function resolver(bytes32 node) public view virtual returns (ENSResolver);
 }
@@ -16,9 +18,9 @@ abstract contract ENSResolver {
 /// @notice This contract is used as a Registry for signaling that your address has been compromised.
 /// @notice funds from fees go to the address registered at protocolguild.eth
 /// @custom:experimental This is an experimental contract.
-contract FraudRegistry {
-    address public ENS_RESOVLER_ADDRESS = 0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e;
-    bytes32 public PROTOCOL_GUILD_NODE = "protocolguild.eth";
+contract FraudRegistry is Ownable {
+    address public constant ENS_RESOVLER_ADDRESS = 0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e;
+    bytes32 public constant PROTOCOL_GUILD_NODE = "protocolguild.eth";
     ENS ens = ENS(0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e);
 
     PriceFeedConsumer private priceConsumer;
@@ -40,8 +42,8 @@ contract FraudRegistry {
     ///      fees will be forwarded to the protocolguild.eth address and donated as a public good.
     ///      Should the balanceMinimum or balanceThreshold fall below the specified amount,
     ///      fees will return accruing inside the contract until the balanceMinimum or balanceThreshold is reached.
-    uint256 public PRE_REGISTRATION_FEE = 5 * 1e18; // minimum of $5 in eth to pre-register
-    uint256 public CROSS_CHAIN_SEARCH_FEE = 2 * 1e18; // minimum of $2 in eth to pre-register
+    uint256 public preRegistrationFee = 5 * 1e18; // minimum of $5 in eth to pre-register
+    uint256 public crossChainSearchFee = 2 * 1e18; // minimum of $2 in eth to pre-register
 
     constructor(address _priceFeed) {
         priceConsumer = PriceFeedConsumer(_priceFeed);
@@ -52,7 +54,7 @@ contract FraudRegistry {
     /// @dev Explain to a developer any extra details
     function preRegisterWallet() external payable {
         uint256 _price = uint256(priceConsumer.getLatestPrice()) * 1e18;
-        require(msg.value >= (PUBLIC_GOODS_REGISTRATION_FEE * 1e18) / _price, "Not enough funds");
+        require(msg.value >= (preRegistrationFee * 1e18) / _price, "Not enough funds");
     }
 
     /// @notice Explain to an end user what this does
@@ -85,6 +87,14 @@ contract FraudRegistry {
 
     /// @notice Explain to an end user what this does
     /// @dev Explain to a developer any extra details
+
+    // function balanceMinium() external onlyOwner {}
+
+    // function balanceThreshold() external onlyOwner {}
+
+    // function pre_registration_fee() external onlyOwner {}
+
+    // function CROSS_CHAIN_SEARCH_FEE() external onlyOwner {}
 
     // TODO mainnet eth resolver check...
     function resolvePGAddress() public view returns (address) {

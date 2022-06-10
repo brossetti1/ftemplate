@@ -18,7 +18,7 @@ abstract contract ENSResolver {
 /// @notice This contract is used as a Registry for signaling that your address has been compromised.
 /// @notice funds from fees go to the address registered at protocolguild.eth
 /// @custom:experimental This is an experimental contract.
-contract FraudRegistry is Ownable {
+contract FraudRegistry {
     address public constant ENS_RESOVLER_ADDRESS = 0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e;
     bytes32 public constant PROTOCOL_GUILD_NODE = "protocolguild.eth";
     ENS ens = ENS(0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e);

@@ -3,8 +3,6 @@ pragma solidity 0.8.13;
 
 import "./PriceConsumerV3.sol";
 
-// import "@openzeppelin/contracts/access/Ownable.sol";
-
 abstract contract ENS {
     function resolver(bytes32 node) public view virtual returns (ENSResolver);
 }

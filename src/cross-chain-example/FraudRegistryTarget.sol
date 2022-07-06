@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity 0.8.13;
+pragma solidity ^0.8.14;
 
-import {IExecutor} from "nxtp/core/connext/interfaces/IExecutor.sol";
-import {IConnextHandler} from "nxtp/core/connext/interfaces/IConnextHandler.sol";
+import {IExecutor} from "@nxtp/core/connext/interfaces/IExecutor.sol";
+import {IConnextHandler} from "@nxtp/core/connext/interfaces/IConnextHandler.sol";
 
 import "../shared/PriceConsumerV3.sol";
 
@@ -76,7 +76,7 @@ contract FraudRegistry {
     }
 
     receive() external payable {
-        (bool sent, ) = resolvePGAddress().call{value: msg.value}("");
+        (bool sent, ) = resolveProtcolGuildAddress().call{value: msg.value}("");
         require(sent, "Failed to send Ether");
     }
 
@@ -123,14 +123,14 @@ contract FraudRegistry {
 
     /// @notice Explain to an end user what this does
     /// @dev Explain to a developer any extra details
-    function iWantToSponserGasForFriendsWallet(address[] wallets) external payable {
+    function iWantToSponserGasForFriendsWallet(address[] memory wallets) external payable {
         if (msg.value * wallets.length >= (registrationFee * 1e18) / getLatestPrice()) {
             revert notEnoughFunds(registrationFee * wallets.length, msg.value);
         }
 
         for (uint256 i = 1; i < wallets.length; i++) {
             if (!sponsoredWallets[wallets[i]]) {
-                sponsoredWallet[wallets[i]] = true;
+                sponsoredWallets[wallets[i]] = true;
             }
         }
     }
@@ -140,7 +140,7 @@ contract FraudRegistry {
     function signStolenWallet() external {}
 
     function fundProtocolGuild() external {
-        (bool sent, ) = resolvePGAddress().call{value: address(this).balance}("");
+        (bool sent, ) = resolveProtcolGuildAddress().call{value: address(this).balance}("");
         require(sent, "Failed to send Ether");
     }
 
@@ -198,7 +198,7 @@ contract FraudRegistry {
     // TODO mainnet eth resolver check...
     /// @notice Explain to an end user what this does
     /// @dev Explain to a developer any extra details
-    function resolvePGAddress() private returns (address) {
+    function resolveProtcolGuildAddress() private returns (address) {
         ENSResolver resolver = ens.resolver(PROTOCOL_GUILD_NODE);
         return resolver.addr(PROTOCOL_GUILD_NODE);
     }

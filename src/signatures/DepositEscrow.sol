@@ -1,9 +1,13 @@
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.14;
+
 // always follow NatSpec
 // https://docs.soliditylang.org/en/latest/natspec-format.html
 
 // Inside each contract, library or interface, use the following order:
-// Pragma statements
 // Imports
+import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
+
 // Interfaces
 // Libraries
 // errors
@@ -11,12 +15,9 @@
 //       revert NotEnoughFunds(amount, balance);
 // contract
 
-// SPDX-License-Identifier: GPL-3.0
-pragma solidity 0.8.13;
-
-/// @author FooBar
-/// @title A simple FooBar example
-contract FooBar {
+/// @author brianrossetti.eth
+/// @title A simple DespositEscrow example
+contract DespositEscrow is EIP712 {
     //  for statements (libraries)
     //  Type declarations
     //    - structs

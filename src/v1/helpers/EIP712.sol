@@ -1,6 +1,3 @@
-// SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts v4.4.1 (utils/cryptography/draft-EIP712.sol)
-
 pragma solidity ^0.8.14;
 
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
@@ -25,9 +22,6 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
  * _Available since v3.4._
  */
 abstract contract EIP712 {
-    /* solhint-disable var-name-mixedcase */
-    // Cache the domain separator as an immutable value, but also store the chain id that it corresponds to, in order to
-    // invalidate the cached domain separator if the chain id changes.
     bytes32 private immutable _CACHED_DOMAIN_SEPARATOR;
     uint256 private immutable _CACHED_CHAIN_ID;
     address private immutable _CACHED_THIS;
@@ -35,8 +29,6 @@ abstract contract EIP712 {
     bytes32 private immutable _HASHED_NAME;
     bytes32 private immutable _HASHED_VERSION;
     bytes32 private immutable _TYPE_HASH;
-
-    /* solhint-enable var-name-mixedcase */
 
     /**
      * @dev Initializes the domain separator and parameter caches.
@@ -98,7 +90,12 @@ abstract contract EIP712 {
      * address signer = ECDSA.recover(digest, signature);
      * ```
      */
-    function _hashTypedDataV4(bytes32 structHash) internal view virtual returns (bytes32) {
+    function _hashTypedDataV4(bytes32 structHash)
+        internal
+        view
+        virtual
+        returns (bytes32)
+    {
         return ECDSA.toTypedDataHash(_domainSeparatorV4(), structHash);
     }
 }

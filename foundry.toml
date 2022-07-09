@@ -20,7 +20,8 @@ remappings = [
   "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts",
   "@openzeppelin/contracts=lib/openzeppelin-contracts/contracts",
   "@nxtp/=lib/nxtp/packages/deployments/contracts/contracts/",
-  "@helpers/=src/helpers/"
+  "@helpers/=src/v1/helpers/",
+  "@libraries/=src/v1/libraries/"
 ]
 
 # Extreme Fuzzing CI Profile :P
